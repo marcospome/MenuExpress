@@ -52,5 +52,46 @@ namespace MenuExpress.Controllers
             }
             return products;
         }
+
+        [HttpPut("productEdit/{id}")]
+        public void EditProduct([FromBody] Product p, int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("UpdateProduct", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdProduct", id);
+                    cmd.Parameters.AddWithValue("@Name", p.Name);
+                    cmd.Parameters.AddWithValue("@Deleted", p.Deleted);
+                    cmd.Parameters.AddWithValue("@Description", p.Description);
+                    cmd.Parameters.AddWithValue("@Price", p.Price);
+                    cmd.Parameters.AddWithValue("@AddDate", p.AddDate);
+                    cmd.Parameters.AddWithValue("@Image", p.Image);
+                    cmd.Parameters.AddWithValue("@IdCategory", p.IdCategory);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+
+        [HttpDelete("productDelete/{id}")]
+        public void DeleteProduct(int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("DeleteProduct", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdProduct", id);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
     }
 }

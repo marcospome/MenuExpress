@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace MenuExpress.Models
 {
@@ -26,10 +25,7 @@ namespace MenuExpress.Models
         [StringLength(500)]
         public string Image { get; set; }
 
+        [ForeignKey("Product")]
         public int IdCategory { get; set; }
-
-        [ForeignKey("IdCategory")]
-        [JsonIgnore]  // Esta propiedad no se serializará en JSON
-        public Category Category { get; set; }
     }
 }

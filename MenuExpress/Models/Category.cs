@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MenuExpress.Models
 {
     public class Category
     {
-        [Key]
         public int IdCategory { get; set; }
 
         [Required]
@@ -13,6 +14,7 @@ namespace MenuExpress.Models
 
         public int Deleted { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        [JsonIgnore]
+        public ICollection<Product>? Products { get; set; }
     }
 }

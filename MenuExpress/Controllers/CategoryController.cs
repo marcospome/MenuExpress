@@ -47,5 +47,39 @@ namespace MenuExpress.Controllers
             }
             return categories;
         }
+
+        [HttpPut("categoryEdit/{id}")]
+        public void EditCategory([FromBody] Category c, int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("UpdateCategory", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCategory", id);
+                    cmd.Parameters.AddWithValue("@Name", c.Name);
+                    cmd.Parameters.AddWithValue("@Deleted", c.Deleted);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+        [HttpDelete("categoryDelete/{id}")]
+        public void DeleteProduct(int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("DeleteCategory", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCategory", id);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
     }
 }
