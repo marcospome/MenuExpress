@@ -265,6 +265,25 @@ GO
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+------------------------- INSERTS DE CATEGORÍAS Y PRODUCTOS -------------------------
 
+INSERT INTO Category (Name, Deleted) 
+VALUES 
+('Ensaladas', 0),
+('Sopas', 0),
+('Pizzas', 0),
+('Snacks', 0),
+('Cafetería', 0);
+
+INSERT INTO Product (Name, Deleted, Description, Price, AddDate, Image, IdCategory) 
+VALUES 
+('Ensalada César', 0, 'Ensalada con lechuga, crutones, queso parmesano y aderezo César', 6000, GETDATE(), 'ensalada_cesar.jpg', 1),
+('Sopa de Pollo', 0, 'Sopa de pollo con verduras', 3500, GETDATE(), 'sopa_pollo.jpg', 2),
+('Pizza Margherita', 0, 'Pizza clásica con tomate, mozzarella y albahaca', 12000, GETDATE(), 'pizza_margherita.jpg', 3),
+('Papas Fritas', 0, 'Papas fritas crujientes con sal', 4500, GETDATE(), 'papas_fritas.jpg', 4),
+('Café Americano', 0, 'Café negro clásico', 1500, GETDATE(), 'cafe_americano.jpg', 5),
+('Té Verde', 0, 'Té verde con un toque de menta', 1200, GETDATE(), 'te_verde.jpg', 5),
+('Pizza Pepperoni', 0, 'Pizza con pepperoni y queso mozzarella', 15000, GETDATE(), 'pizza_pepperoni.jpg', 3),
+('Galletas de Chocolate', 0, 'Galletas con chispas de chocolate', 1000, GETDATE(), 'galletas_chocolate.jpg', 4);
 
 
