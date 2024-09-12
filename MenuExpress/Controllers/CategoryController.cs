@@ -6,7 +6,7 @@ using MenuExpress.Models;
 
 namespace MenuExpress.Controllers
 {
-    [Route("api/category/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -47,6 +47,24 @@ namespace MenuExpress.Controllers
             }
             return categories;
         }
+
+        [HttpPost("CreateCategory")]
+        public void CreateCategory([FromBody] Category c)
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("CreateCategory", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Name", c.Name);
+                    cmd.Parameters.AddWithValue("@Deleted", c.Deleted);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
 
         [HttpPut("categoryEdit/{id}")]
         public void EditCategory([FromBody] Category c, int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.

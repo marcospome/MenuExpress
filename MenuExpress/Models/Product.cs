@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MenuExpress.Models
 {
     public class Product
     {
         [Key]
+        [JsonIgnore]
         public int IdProduct { get; set; }
 
         [Required]

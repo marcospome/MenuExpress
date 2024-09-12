@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace MenuExpress.Controllers
 {
-    [Route("api/product/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -63,6 +63,28 @@ namespace MenuExpress.Controllers
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdProduct", id);
+                    cmd.Parameters.AddWithValue("@Name", p.Name);
+                    cmd.Parameters.AddWithValue("@Deleted", p.Deleted);
+                    cmd.Parameters.AddWithValue("@Description", p.Description);
+                    cmd.Parameters.AddWithValue("@Price", p.Price);
+                    cmd.Parameters.AddWithValue("@AddDate", p.AddDate);
+                    cmd.Parameters.AddWithValue("@Image", p.Image);
+                    cmd.Parameters.AddWithValue("@IdCategory", p.IdCategory);
+                    cmd.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+        [HttpPost("CreateProduct")]
+        public void CreateProudct([FromBody] Product p)
+        {
+            using (SqlConnection connection = new(con))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new("CreateProduct", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Name", p.Name);
                     cmd.Parameters.AddWithValue("@Deleted", p.Deleted);
                     cmd.Parameters.AddWithValue("@Description", p.Description);
