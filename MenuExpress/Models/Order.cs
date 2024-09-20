@@ -18,20 +18,26 @@ namespace MenuExpress.Models
 
         [JsonIgnore]
         public ICollection<Order>? Orders { get; set; }
-        [JsonIgnore]
-        public ICollection<OrderDetail>? OrderDetails { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 
     public class Order
     {
+        public Order()
+        {
+            OrderDetails = new List<OrderDetail>();
+        }
+
         [Key]
         public int IdOrder { get; set; }
 
-        [Required]
-        public DateTime AddDate { get; set; }
+        public DateTime? AddDate { get; set; }
 
+        [JsonIgnore]
         public int? IdUser { get; set; }
 
+        [JsonIgnore]
         public int? IdStatus { get; set; }
 
         [Required]
@@ -46,19 +52,20 @@ namespace MenuExpress.Models
         [StringLength(20)]
         public string ClientDNI { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string ClientEmail { get; set; }
-
-        [ForeignKey("IdStatus")]
-        public OrderStatus Status { get; set; }
-
-        [ForeignKey("IdUser")]
-        public User User { get; set; }
+        [StringLength(255)]
+        public string? ClientEmail { get; set; }
 
         [JsonIgnore]
-        public ICollection<OrderDetail>? OrderDetails { get; set; }
+        [ForeignKey("IdStatus")]
+        public OrderStatus? Status { get; set; } // Hacer que la relación sea opcional
+
+        [JsonIgnore]
+        [ForeignKey("IdUser")]
+        public User? User { get; set; } // Hacer que la relación sea opcional
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
+
 
     public class OrderDetail
     {
@@ -68,25 +75,21 @@ namespace MenuExpress.Models
         [Required]
         public int Qty { get; set; }
 
-        public int? IdStatus { get; set; }
-
-        [Required]
-        public DateTime AddDate { get; set; }
+        public DateTime? AddDate { get; set; } // Asegúrate de manejar esto adecuadamente.
 
         [StringLength(255)]
-        public string Note { get; set; }
-
-        public int? IdOrder { get; set; }
+        public string? Note { get; set; }
 
         public int? IdProduct { get; set; }
 
-        [ForeignKey("IdOrder")]
-        public Order Order { get; set; }
+        [JsonIgnore]
+        [ForeignKey("Order")]
+        public Order? Order { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("IdProduct")]
-        public Product Product { get; set; }
-
-        [ForeignKey("IdStatus")]
-        public OrderStatus Status { get; set; }
+        public Product? Product { get; set; }
     }
 }
+
+

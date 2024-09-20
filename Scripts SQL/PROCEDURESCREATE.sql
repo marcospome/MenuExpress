@@ -263,3 +263,60 @@ GO
 GO
 
 
+-------------------- PRC CreateOrder --------------------
+
+CREATE PROCEDURE [dbo].[CreateOrder]
+    @ClientName NVARCHAR(100),
+    @ClientLastName NVARCHAR(100),
+    @ClientDNI NVARCHAR(20),
+    @ClientEmail NVARCHAR(255)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Insertar en la tabla Order
+        INSERT INTO [dbo].[Order] (IdStatus, ClientName, ClientLastName, ClientDNI, ClientEmail, AddDate)
+        VALUES (1, @ClientName, @ClientLastName, @ClientDNI, @ClientEmail, GETDATE()); -- Usa GETDATE() para establecer la fecha actual
+
+        -- Obtener el ID de la orden recién insertada
+        DECLARE @IdOrder INT = SCOPE_IDENTITY();
+        SELECT @IdOrder AS IdOrder; -- Devuelve el IdOrder
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+-------------------- PRC CreateOrderDetail --------------------
+
+CREATE PROCEDURE [dbo].[CreateOrderDetail]
+    @IdOrder INT,
+    @Qty INT,
+    @Note NVARCHAR(255),
+    @IdProduct INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Insertar en la tabla OrderDetail
+        INSERT INTO [dbo].[OrderDetail] (Qty, IdStatus, Note, IdOrder, IdProduct, AddDate)
+        VALUES (@Qty, 1, @Note, @IdOrder, @IdProduct, getdate()); -- Incluir AddDate
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
