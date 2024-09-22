@@ -6,7 +6,6 @@ namespace MenuExpress.Models
 {
     public class Category
     {
-        [JsonIgnore]
         public int IdCategory { get; set; }
 
         [Required]

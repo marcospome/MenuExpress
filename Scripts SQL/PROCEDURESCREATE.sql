@@ -301,7 +301,7 @@ GO
 CREATE PROCEDURE [dbo].[CreateOrderDetail]
     @IdOrder INT,
     @Qty INT,
-    @Note NVARCHAR(255),
+    @Note NVARCHAR(255) NULL,
     @IdProduct INT
 AS
 BEGIN
@@ -319,4 +319,87 @@ BEGIN
         THROW;
     END CATCH
 END
+GO
+
+--------------------------------------------------------------------------------------------------------------------
+
+-------------------- PRC DeleteOrderDetail] --------------------
+
+Create PROCEDURE [dbo].[DeleteOrderDetail]
+@IdOrder INT,
+@IdOderDetail NVARCHAR(100)
+AS
+BEGIN
+-- Actualizar el producto en la tabla Product
+UPDATE OrderDetail
+SET 
+	Deleted = 1
+WHERE 
+    IdOrderDetail = @IdOderDetail and IdOrder = @IdOrder;
+END;
+GO
+
+--------------------------------------------------------------------------------------------------------------------
+
+-------------------- PRC UpdateOrderDetail --------------------
+
+CREATE PROCEDURE [dbo].[UpdateOrderDetail]
+    @IdOrder INT,
+    @IdOderDetail NVARCHAR(100),
+    @Note NVARCHAR(500),
+	@Qty INT
+AS
+BEGIN
+    -- Actualizar el producto en la tabla Product
+    UPDATE OrderDetail
+    SET 
+        Note = @Note,
+        Qty = @qty,
+		AddDate = GETDATE(),
+		IdStatus=2
+    WHERE 
+        IdOrderDetail = @IdOderDetail and IdOrder = @IdOrder;
+END;
+
+
+
+select * from OrderDetail
+GO
+
+
+-------------------- PRC AddItemOrderDetail --------------------
+
+-- Procedimiento almacenado para agregar una nueva línea en OrderDetail con validación
+CREATE PROCEDURE [dbo].[AddItemOrderDetail]
+    @IdOrder INT,          -- ID de la orden
+    @Qty INT,              -- Cantidad del producto
+    @Note NVARCHAR(255) = NULL,  -- Nota opcional
+    @IdProduct INT        -- ID del producto
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Validar si el estado de la orden en la tabla Order es 1
+        IF EXISTS (SELECT 1 FROM [dbo].[Order] WHERE IdOrder = @IdOrder AND IdStatus = 1)
+        BEGIN
+            -- Si el estado es 1, insertar el nuevo registro en OrderDetail
+            INSERT INTO [dbo].[OrderDetail] (Qty, IdStatus, AddDate, Note, IdOrder, IdProduct)
+            VALUES (@Qty, 1, GETDATE(), @Note, @IdOrder, @IdProduct);
+
+            COMMIT TRANSACTION;
+        END
+        ELSE
+        BEGIN
+            -- Si la orden no tiene el estado 1, lanzar un error
+            RAISERROR('La orden debe tener el estado 1(Ingresado) para agregar nuevos items.', 16, 1);
+            ROLLBACK TRANSACTION;
+        END
+    END TRY
+    BEGIN CATCH
+        -- Si ocurre un error, revertir la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
 GO

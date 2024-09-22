@@ -1,0 +1,115 @@
+/* General styles for light and dark mode */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light and dark mode variables */
+:root {
+    --bg-color-light: #fafafa;
+    --text-color-light: #2c2c2c;
+    --bg-color-dark: #1c1c1c;
+    --text-color-dark: #eaeaea;
+    --accent-color-light: #FF7043;
+    --accent-color-dark: #FFAB91;
+}
+
+.light-mode {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+    --accent-color: var(--accent-color-light);
+}
+
+.dark-mode {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+    --accent-color: var(--accent-color-dark);
+}
+
+/* Mode toggle button */
+.mode-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 10px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mode-toggle:hover {
+    background-color: var(--text-color);
+    color: var(--accent-color);
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 2rem 0;
+    color: var(--text-color);
+}
+
+#products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.product {
+    background-color: rgba(209, 209, 209, 0.9); /* Fondo más claro en modo claro */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.dark-mode .product {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo más claro en modo oscuro */
+}
+
+.product:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dark-mode .product:hover {
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1); /* Sombra suave */
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.product h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.product p {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.product .price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}

@@ -227,13 +227,6 @@ GO
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-/****** Object:  Table [dbo].[OrderDetail]    Script Date: 12/9/2024 11:24:22 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[OrderDetail](
 	[IdOrderDetail] [int] IDENTITY(1,1) NOT NULL,
 	[Qty] [int] NOT NULL,
@@ -242,11 +235,15 @@ CREATE TABLE [dbo].[OrderDetail](
 	[Note] [nvarchar](255) NULL,
 	[IdOrder] [int] NULL,
 	[IdProduct] [int] NULL,
+	[Deleted] [bit] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdOrderDetail] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[OrderDetail] ADD  DEFAULT ((0)) FOR [Deleted]
 GO
 
 ALTER TABLE [dbo].[OrderDetail]  WITH CHECK ADD FOREIGN KEY([IdOrder])
@@ -277,13 +274,13 @@ VALUES
 
 INSERT INTO Product (Name, Deleted, Description, Price, AddDate, Image, IdCategory) 
 VALUES 
-('Ensalada César', 0, 'Ensalada con lechuga, crutones, queso parmesano y aderezo César', 6000, GETDATE(), 'ensalada_cesar.jpg', 1),
-('Sopa de Pollo', 0, 'Sopa de pollo con verduras', 3500, GETDATE(), 'sopa_pollo.jpg', 2),
-('Pizza Margherita', 0, 'Pizza clásica con tomate, mozzarella y albahaca', 12000, GETDATE(), 'pizza_margherita.jpg', 3),
-('Papas Fritas', 0, 'Papas fritas crujientes con sal', 4500, GETDATE(), 'papas_fritas.jpg', 4),
-('Café Americano', 0, 'Café negro clásico', 1500, GETDATE(), 'cafe_americano.jpg', 5),
-('Té Verde', 0, 'Té verde con un toque de menta', 1200, GETDATE(), 'te_verde.jpg', 5),
-('Pizza Pepperoni', 0, 'Pizza con pepperoni y queso mozzarella', 15000, GETDATE(), 'pizza_pepperoni.jpg', 3),
-('Galletas de Chocolate', 0, 'Galletas con chispas de chocolate', 1000, GETDATE(), 'galletas_chocolate.jpg', 4);
+('Ensalada César', 0, 'Ensalada con lechuga, crutones, queso parmesano y aderezo César', 6000, GETDATE(), 'https://www.cocinacaserayfacil.net/wp-content/uploads/2018/06/Ensalada-cesar.jpg', 1),
+('Sopa de Pollo', 0, 'Sopa de pollo con verduras', 3500, GETDATE(), 'https://especiasmontero.com/wp-content/uploads/2018/02/CaldoDePollo-1.jpg', 2),
+('Pizza Margherita', 0, 'Pizza clásica con tomate, mozzarella y albahaca', 12000, GETDATE(), 'https://imag.bonviveur.com/pizza-margarita.jpg', 3),
+('Papas Fritas', 0, 'Papas fritas crujientes con sal', 4500, GETDATE(), 'https://phantom-marca.unidadeditorial.es/813d16708dc72860fd3cf319c9a245b5/resize/828/f/jpg/assets/multimedia/imagenes/2023/08/04/16911461030527.jpg', 4),
+('Café Americano', 0, 'Café negro clásico', 1500, GETDATE(), 'https://www.somoselcafe.com.ar/img/novedades/47.jpg', 5),
+('Té Verde', 0, 'Té verde con un toque de menta', 1200, GETDATE(), 'https://image.tuasaude.com/media/article/yp/dt/beneficios-del-te-verde_17350_l.jpg', 5),
+('Pizza Pepperoni', 0, 'Pizza con pepperoni y queso mozzarella', 15000, GETDATE(), 'https://www.sortirambnens.com/wp-content/uploads/2019/02/pizza-de-peperoni.jpg', 3),
+('Galletas de Chocolate', 0, 'Galletas con chispas de chocolate', 1000, GETDATE(), 'https://s1.elespanol.com/2023/04/09/cocinillas/recetas/postres/754934523_232288662_1706x960.jpg', 4);
 
 
