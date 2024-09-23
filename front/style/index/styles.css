@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8ebda; /* Fondo verde suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido a la derecha */
+    align-items: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+    max-width: 800px; /* Reducimos el ancho */
+    margin: 150px;
+}
+
+.left-section {
+    position: absolute; /* Sacamos el logo del flujo del contenedor */
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%); /* Centramos verticalmente el logo */
+}
+
+.logo-image img {
+    width: 500px; /* Ajuste de tamaño del logo */
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.menu-item {
+    background-color: #faf4eb; /* Fondo claro */
+    border: 2px solid #4d4d3d; /* Borde oscuro */
+    padding: 12px 30px; /* Ajustamos el padding */
+    margin: 10px 0;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background-color: #d7d7d7;
+    color: #2c2c2c;
+    transform: scale(1.05);
+}
+
+.menu-item:active {
+    background-color: #c5c5c5;
+}
+

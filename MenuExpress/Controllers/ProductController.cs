@@ -1,4 +1,5 @@
 ﻿using MenuExpress.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
@@ -77,8 +78,14 @@ namespace MenuExpress.Controllers
         }
 
         [HttpPost("CreateProduct")]
-        public void CreateProudct([FromBody] Product p)
+        [Authorize(Roles = "Admin")] // Requiere que el usuario tenga el rol "Admin"
+        public IActionResult CreateProduct([FromBody] Product p)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized("Usuario no autenticado.");
+            }
+
             using (SqlConnection connection = new(con))
             {
                 connection.Open();
@@ -96,6 +103,8 @@ namespace MenuExpress.Controllers
                 }
                 connection.Close();
             }
+
+            return CreatedAtAction(nameof(CreateProduct), new { name = p.Name });
         }
 
 

@@ -113,3 +113,32 @@ h1 {
     font-weight: bold;
     color: var(--accent-color);
 }
+
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #000000;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #555555;
+}
+
+.dark-mode .back-button {
+    background-color: #ffffff; /* Fondo más claro en modo oscuro */
+    color: #000000;
+}
+
+.dark-mode .back-button:hover {
+    background-color: #808080;
+}

@@ -1,2 +1,74 @@
-<button onclick="window.location.href='/pages/producto/lista-productos.html'">Ir a Lista de Productos</button>
-<button onclick="window.location.href='/pages/producto/crear-producto.html'">Ir a Crear Producto</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Menu Express</title>
+    <link rel="stylesheet" href="/style/index/styles.css">
+</head>
+<body>
+    <div class="logo-image">
+        <img src="/images/menuexpress.png" alt="Logo">
+    </div>
+    <div class="container">
+        <div class="left-section">
+        </div>
+        <div class="right-section">
+            <button class="menu-item" onclick="location.href='/pages/producto/lista-productos.html'">Menú</button>
+            <button class="menu-item" onclick="location.href='/pages/documentacion.html'">Documentación</button>
+            <button class="menu-item" id="authButton" onclick="toggleAuth()"></button>
+            <button class="menu-item" onclick="location.href='/pages/contactar.html'">Contactar</button>
+            <button class="menu-item" onclick="location.href='https://github.com/marcospome/MenuExpress'">Repositorio</button>
+            <!-- Botón visible solo para Admin -->
+            <button id="admin-button" class="menu-item" style="display: none;" onclick="location.href='/pages/auth/adminpanel.html'">Panel de Administración</button>
+        </div>
+        <!-- Botón visible solo para Admin -->
+    </div>
+
+    <script>
+        const adminButton = document.getElementById('admin-button');
+
+        function updateAuthButton() {
+            const token = localStorage.getItem('token');
+            const authButton = document.getElementById('authButton');
+
+            if (token) {
+                authButton.textContent = 'Cerrar Sesión';
+            } else {
+                authButton.textContent = 'Iniciar Sesión';
+            }
+        }
+
+        function toggleAuth() {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                // Cerrar sesión
+                localStorage.removeItem('token');
+                alert("Sesión cerrada.");
+                updateAuthButton();
+                window.location.href = '/';
+            } else {
+                // Redirigir a la página de inicio de sesión
+                window.location.href = '/pages/auth/login.html';
+            }
+        }
+
+        // Función para verificar si el usuario está autenticado y es admin
+        function checkAdmin() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const payload = JSON.parse(atob(token.split('.')[1])); // Decodificar el token
+            
+                // Verificar si el rol es "Admin" bajo la clave del esquema correcto
+                if (payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] === 'Admin') {
+                    adminButton.style.display = 'block'; // Mostrar el botón de admin
+                }
+            }
+        }
+        // Inicializar el botón al cargar la página
+        window.onload = updateAuthButton;
+        checkAdmin();
+    </script>
+</body>
+</html>

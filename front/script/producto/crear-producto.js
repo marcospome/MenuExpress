@@ -3,11 +3,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function fetchCategories() {
+    const token = localStorage.getItem('token'); // Obtener el token almacenado
     try {
-        const response = await fetch('https://localhost:7080/api/Category/getAllCategories');
+        const response = await fetch('https://localhost:7080/api/Category/getAllCategories', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, // Agregar el token al header de la solicitud
+                'Content-Type': 'application/json'
+            }
+        });
+        
         if (!response.ok) {
             throw new Error('Error al obtener categorías');
         }
+        
         const categories = await response.json();
         populateCategorySelect(categories);
     } catch (error) {
@@ -29,7 +38,8 @@ function populateCategorySelect(categories) {
 // Código para manejar el envío del formulario
 document.getElementById('product-form').addEventListener('submit', async function (event) {
     event.preventDefault();
-
+    
+    const token = localStorage.getItem('token'); // Obtener el token almacenado
     const product = {
         Name: document.getElementById('name').value,
         Deleted: 0,
@@ -44,6 +54,7 @@ document.getElementById('product-form').addEventListener('submit', async functio
         const response = await fetch('https://localhost:7080/api/Product/CreateProduct', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`, // Agregar el token al header de la solicitud
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(product)
