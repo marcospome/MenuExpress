@@ -1,3 +1,4 @@
+ï»¿using MenuExpress.MiddleWare;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -13,16 +14,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins", builder =>
     {
         builder.AllowAnyOrigin()  // Permitir cualquier origen
-               .AllowAnyMethod()  // Permitir cualquier método
+               .AllowAnyMethod()  // Permitir cualquier mï¿½todo
                .AllowAnyHeader(); // Permitir cualquier encabezado
     });
 });
 
-// Configuración de Swagger
+// Configuraciï¿½n de Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuración de autenticación JWT
+// Configuraciï¿½n de autenticaciï¿½n JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,16 +51,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseMiddleware<ExceptionMiddleware>(); // Mover esto aquï¿½
+}
 
 app.UseHttpsRedirection();
 
-// Aplicar la política CORS
+// Aplicar la polï¿½tica CORS
 app.UseCors("AllowAllOrigins");
 
-// Activar la autenticación y autorización
+app.UseRouting(); // Mueve esto aquï¿½
+
+// Activar la autenticaciï¿½n y autorizaciï¿½n
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers(); // Llama a esto aquï¿½, no en el mï¿½todo Configure
 
 app.Run();

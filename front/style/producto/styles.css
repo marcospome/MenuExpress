@@ -44,6 +44,7 @@ body {
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .mode-toggle:hover {
@@ -60,6 +61,14 @@ h1 {
     color: var(--text-color);
 }
 
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
+    color: var(--accent-color);
+}
+
+/* Products container */
 #products-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -68,24 +77,21 @@ h1 {
 }
 
 .product {
-    background-color: rgba(209, 209, 209, 0.9); /* Fondo más claro en modo claro */
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(209, 209, 209, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    position: relative;
 }
 
 .dark-mode .product {
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo más claro en modo oscuro */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .product:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.dark-mode .product:hover {
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1); /* Sombra suave */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .product img {
@@ -98,13 +104,11 @@ h1 {
 .product h2 {
     font-size: 1.6rem;
     font-weight: 500;
-    color: var(--text-color);
     margin-bottom: 0.5rem;
 }
 
 .product p {
     font-size: 1rem;
-    color: var(--text-color);
     margin-bottom: 1rem;
 }
 
@@ -114,31 +118,124 @@ h1 {
     color: var(--accent-color);
 }
 
-
+/* Back button */
 .back-button {
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #000000;
+    background-color: var(--accent-color);
     border: none;
     padding: 10px 15px;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
-    text-decoration: none;
     color: #ffffff;
     transition: background-color 0.3s;
 }
 
 .back-button:hover {
-    background-color: #555555;
+    background-color: #ff5722;
 }
 
-.dark-mode .back-button {
-    background-color: #ffffff; /* Fondo más claro en modo oscuro */
-    color: #000000;
+/* Cart container */
+#cart-container {
+    padding: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.dark-mode .back-button:hover {
-    background-color: #808080;
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item .item-name {
+    font-weight: 500;
+}
+
+.cart-item .item-price {
+    color: var(--accent-color);
+}
+
+/* Finalize order button */
+.finalize-order {
+    display: block;
+    margin: 2rem auto;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.finalize-order:hover {
+    background-color: #ff5722;
+    transform: scale(1.05);
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Mantiene el modal en la pantalla */
+    z-index: 1000; /* Asegura que el modal esté por encima del contenido */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    overflow: auto; /* Habilita el desplazamiento si es necesario */
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Centra el modal */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    max-width: 500px; /* Máximo ancho del modal */
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra */
+}
+
+.modal h2 {
+    margin: 0 0 1rem 0;
+    color: var(--text-color);
+}
+
+/* Input styles */
+.modal input {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.modal input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+    cursor: pointer;
 }

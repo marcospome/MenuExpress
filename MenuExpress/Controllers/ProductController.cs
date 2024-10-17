@@ -55,6 +55,7 @@ namespace MenuExpress.Controllers
         }
 
         [HttpPut("productEdit/{id}")]
+        [Authorize(Roles = "Admin")] // Requiere que el usuario tenga el rol "Admin"
         public void EditProduct([FromBody] Product p, int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
         {
             using (SqlConnection connection = new(con))
@@ -109,6 +110,7 @@ namespace MenuExpress.Controllers
 
 
         [HttpDelete("productDelete/{id}")]
+        [Authorize(Roles = "Admin")] // Requiere que el usuario tenga el rol "Admin"
         public void DeleteProduct(int id)  // si pongo List<Action> puedo enviar varios elementos en un solo json.
         {
             using (SqlConnection connection = new(con))

@@ -37,7 +37,6 @@ namespace MenuExpress.Models
         [JsonIgnore]
         public int? IdUser { get; set; }
 
-        [JsonIgnore]
         public int? IdStatus { get; set; }
 
         [Required]
@@ -57,11 +56,11 @@ namespace MenuExpress.Models
 
         [JsonIgnore]
         [ForeignKey("IdStatus")]
-        public OrderStatus? Status { get; set; } // Hacer que la relación sea opcional
+        public OrderStatus? Status { get; set; } 
 
         [JsonIgnore]
         [ForeignKey("IdUser")]
-        public User? User { get; set; } // Hacer que la relación sea opcional
+        public User? User { get; set; } 
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }
@@ -81,6 +80,8 @@ namespace MenuExpress.Models
         public string? Note { get; set; }
 
         public int? IdProduct { get; set; }
+
+        public int? IdStatus { get; set; }
 
         [JsonIgnore]
         [ForeignKey("Order")]

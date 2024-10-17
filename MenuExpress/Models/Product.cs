@@ -7,7 +7,6 @@ namespace MenuExpress.Models
     public class Product
     {
         [Key]
-        [JsonIgnore]
         public int IdProduct { get; set; }
 
         [Required]
