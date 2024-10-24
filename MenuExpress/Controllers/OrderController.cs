@@ -123,8 +123,6 @@ namespace MenuExpress.Controllers
         [HttpPut("orderDetailAddItem/{id}")]
         public IActionResult orderDetailAddItem([FromBody] OrderDetail od, int id)
         {
-            try
-            {
                 using (SqlConnection connection = new SqlConnection(con))
                 {
                     connection.Open();
@@ -148,19 +146,10 @@ namespace MenuExpress.Controllers
                 }
 
                 return Ok("Se agrego el nuevo item a la orden correctamente.");
-            }
-            catch (SqlException ex) // Evita qué el programa se detenga por un error SQL.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado. Intente nuevamente más tarde.");
-            }
-            catch (Exception ex) // Evita qué el programa se detenga por un error del servidor.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado. Intente nuevamente más tarde.");
-            }
-
-            // ------------------------------------------ Método para traer todas las ordenes ------------------------------------------ 
-
         }
+
+        // ------------------------------------------ Método para traer todas las ordenes ------------------------------------------ 
+
         [HttpGet("getAllOrders")]
         public IEnumerable<Order> GetAllActions()
         {
@@ -201,8 +190,6 @@ namespace MenuExpress.Controllers
         [HttpGet("getOrderDetails/{idOrder}")]
         public IActionResult GetOrderDetails(int idOrder)
         {
-            try
-            {
                 List<OrderDetail> orderDetails = new(); // Lista para almacenar los detalles de la orden
                 using (SqlConnection connection = new(con)) // Se obtiene la conexión desde la cadena de conexión definida en el appsettings.json
                 {
@@ -233,15 +220,6 @@ namespace MenuExpress.Controllers
                 }
 
                 return Ok(orderDetails); // Devuelve la lista de detalles de la orden con estado 200 OK
-            }
-            catch (SqlException ex) // Evita que el programa se detenga por un error SQL.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado con la base de datos. Intente nuevamente más tarde.");
-            }
-            catch (Exception ex) // Evita que el programa se detenga por un error del servidor.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado. Intente nuevamente más tarde.");
-            }
         }
 
         // ------------------------------------------ Método para traer las ordenes con detalle por iduser ------------------------------------------ 
@@ -250,8 +228,6 @@ namespace MenuExpress.Controllers
         [HttpGet("getAllOrdersByUser/{idUser}")]
         public IActionResult GetAllOrdersByUser(int idUser)
         {
-            try
-            {
                 List<Order> orders = new List<Order>();
 
                 using (SqlConnection connection = new SqlConnection(con))
@@ -318,18 +294,5 @@ namespace MenuExpress.Controllers
                 // Devuelve la lista de órdenes con sus respectivos detalles
                 return Ok(orders);
             }
-            catch (SqlException ex) // Evita que el programa se detenga por un error SQL.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado con la base de datos. Intente nuevamente más tarde.");
-            }
-            catch (Exception ex) // Evita que el programa se detenga por un error del servidor.
-            {
-                return StatusCode(500, "Ha ocurrido un inconveniente inesperado. Intente nuevamente más tarde.");
-            }
         }
-
-
-
-
-    }
 }

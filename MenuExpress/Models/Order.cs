@@ -77,7 +77,7 @@ namespace MenuExpress.Models
         public DateTime? AddDate { get; set; } // Asegúrate de manejar esto adecuadamente.
 
         [StringLength(255)]
-        public string? Note { get; set; }
+        public string Note { get; set; }
 
         public int? IdProduct { get; set; }
 
